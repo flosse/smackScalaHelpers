@@ -10,13 +10,6 @@ import smackx.packet._
 import smackx.packet.DataForm
 import scala.collection.JavaConversions._ 
 
-trait Storable{
-
- def toXML:xml.Node
- def fromXML(xml:scala.xml.Node):Unit
-
-}
-
 class StorageNode( val name:String, val leafNode:LeafNode){
 
   import scala.xml._

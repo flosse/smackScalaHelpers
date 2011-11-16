@@ -23,6 +23,7 @@ using Ad-Hoc Commands.
 - Delete User
 - Disable User
 - Re-Enable User
+- Change User Password
 
 #### Usage
 
@@ -36,6 +37,7 @@ serviceAdmin.deleteUser("old@example.org")
 serviceAdmin.disableUser("badguy@example.org")
 serviceAdmin.reEnableUser("goodguy@example.org")
 
+serviceAdmin.changeUserPassword("goodguy@example.org", "newSecret")
 ```
 
 ### XEP-0222/XEP-0223 - Persistent Storage of Public/Private Data via PubSub

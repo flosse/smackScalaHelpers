@@ -8,7 +8,8 @@ scalaVersion  := "2.9.1"
 
 libraryDependencies ++= Seq(
   "jivesoftware"              % "smack"               % "3.2.1",
-  "jivesoftware"              % "smackx"              % "3.2.1"
+  "jivesoftware"              % "smackx"              % "3.2.1",
+  "commons-logging"           % "commons-logging"     % "1.1.1"
 )
 
 resolvers ++= Seq(
