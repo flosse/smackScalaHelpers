@@ -19,7 +19,8 @@ class StorageNode( val name:String, val leafNode:LeafNode){
   private def updateConfig(priv:Boolean){
     val cfg = new ConfigureForm( leafNode.getNodeConfiguration.createAnswerForm )
     cfg.setPersistentItems(true)
-    cfg.setDeliverPayloads(false)
+    cfg.setDeliverPayloads(true)
+    cfg.setMaxItems(0) // 0 => unlimited
     if (priv == false)
       cfg.setAccessModel(AccessModel.open)
     else
