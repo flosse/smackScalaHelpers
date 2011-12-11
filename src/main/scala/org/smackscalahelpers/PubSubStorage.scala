@@ -6,9 +6,9 @@ import smackx._
 import smackx.pubsub._
 import smackx.pubsub.FormType
 import smackx.pubsub.LeafNode
-import smackx.packet._        
+import smackx.packet._
 import smackx.packet.DataForm
-import scala.collection.JavaConversions._ 
+import scala.collection.JavaConversions._
 
 class StorageNode( val name:String, val leafNode:LeafNode){
 
@@ -17,17 +17,17 @@ class StorageNode( val name:String, val leafNode:LeafNode){
   /* PRIVATE METHODS*/
 
   private def updateConfig(priv:Boolean){
-    val cfg = leafNode.getNodeConfiguration() 
+    val cfg = new ConfigureForm( leafNode.getNodeConfiguration.createAnswerForm )
     cfg.setPersistentItems(true)
     cfg.setDeliverPayloads(false)
-    if (priv == false) 
+    if (priv == false)
       cfg.setAccessModel(AccessModel.open)
     else
       cfg.setAccessModel(AccessModel.whitelist)
     leafNode.sendConfigurationForm(cfg)
   }
 
-  private def setToNodeMap[T]( set:Set[T] ):Map[String,Node] = 
+  private def setToNodeMap[T]( set:Set[T] ):Map[String,Node] =
     set.asInstanceOf[Set[Item]]
       .map( x => x.getId() -> x.toXML)
       .map( x => x._1 -> XML.loadString(x._2).asInstanceOf[Node] )
@@ -46,7 +46,7 @@ class StorageNode( val name:String, val leafNode:LeafNode){
       override def toXML():String = createItem(item, id).toString
     })}
 
-  def get():Map[String,Node] = 
+  def get():Map[String,Node] =
     setToNodeMap( leafNode.getItems().toSet )
 
   def get(id:String):Option[Node] = {
@@ -72,12 +72,12 @@ class PubSubStorage (conn:XMPPConnection){
   private val ACCESS_MODEL  = "pubsub#access_model"
   private val PERSIST_ITEMS = "pubsub#persist_items"
   private val cfg = new ConfigureForm(FormType.submit)
-  private val pubSubManager = new PubSubManager(conn)  
+  private val pubSubManager = new PubSubManager(conn)
 
   cfg.setPersistentItems(true)
   cfg.setDeliverPayloads(false)
   cfg.setAccessModel(AccessModel.whitelist)
-  
+
   private def castNodeToStorageNode(node:Node):StorageNode =
     node match{
       case l:LeafNode => new StorageNode(node.getId,l)
